@@ -1,13 +1,13 @@
 'use strict';
-const { createAutomaker } = require('../repositories/automakerRepository');
+const AutomakerService = require('../services/automakerService');
 
 class AutomakerController {
     static async post(req, res) {
-        await createAutomaker("Automaker");
-        return true;
+        console.log('Chamou controller');
+        console.log(req.data);
+        await AutomakerService.createOne();
+        return res.send();
     }
 }
 
-module.exports = {
-    AutomakerController,
-};
+module.exports = AutomakerController;

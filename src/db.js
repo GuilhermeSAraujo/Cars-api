@@ -50,4 +50,4 @@ const fillDb = async (db) => {
     });
 }
 
-module.exports = { db };
+module.exports = db;

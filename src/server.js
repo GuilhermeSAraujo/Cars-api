@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
-const router = require('./routers/user-rt');
+const router = require('./routers/router.js');
 const database = require('./db.js');
-	console.log(database.sync());
 
 const port = 3000;
 
