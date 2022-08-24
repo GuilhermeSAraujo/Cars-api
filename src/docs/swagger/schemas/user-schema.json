@@ -1,0 +1,19 @@
+{
+  "Schema": {
+    "properties": {
+      "name": {
+        "type": "String",
+        "required": true,
+        "minLength": 3
+      },
+      "age": {
+        "type": "Number",
+        "min": 13
+      },
+      "email": {
+        "type": "String",
+        "unique": true
+      }
+    }
+  }
+}
