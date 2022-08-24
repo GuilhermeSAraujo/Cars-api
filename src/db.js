@@ -1,62 +1,53 @@
 var sqlite3 = require('sqlite3');
-let db = new sqlite3.Database('./mcu.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+let db = new sqlite3.Database('./car.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
     if (err && err.code == "SQLITE_CANTOPEN") {
         createDatabase();
         return;
-        } else if (err) {
-            console.log("Getting error " + err);
-            exit(1);
+    } else if (err) {
+        console.log("Getting error " + err);
+        exit(1);
     }
-    runQueries(db);
+    // createAutomaker(db);
+    // createModels(db);
+    fillDb(db);
 });
 
-function createDatabase() {
-    var newdb = new sqlite3.Database('mcu.db', (err) => {
-        if (err) {
-            console.log("Getting error " + err);
-            exit(1);
-        }
-        createTables(newdb);
+
+const fillDb = async (db) => {
+    db.serialize(() => {
+        db.run(`
+            CREATE TABLE IF NOT EXISTS automaker(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT
+            );`
+        );
+        db.run(`
+            CREATE TABLE IF NOT EXISTS models(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            automaker_id INTEGER,
+            FOREIGN KEY (automaker_id) REFERENCES automaker (id) 
+            );`
+        );
+        db.all(`
+           INSERT INTO automaker (name) VALUES ("Fiat");`
+        );
+        db.all(`
+           INSERT INTO automaker (name) VALUES ("Ford");`
+        );
+        db.all(`
+           INSERT INTO automaker (name) VALUES ("Chevrolet");`
+        );
+        db.all(`
+            INSERT INTO models (name, automaker_id) VALUES ("Argo", 1);`
+        );
+        db.all(`
+            INSERT INTO models (name, automaker_id) VALUES ("Fusion", 2);`
+        );
+        db.all(`
+            INSERT INTO models (name, automaker_id) VALUES ("Prisma", 3);`
+        );
     });
 }
 
-function createTables(newdb) {
-    newdb.exec(`
-    create table hero (
-        hero_id int primary key not null,
-        hero_name text not null,
-        is_xman text not null,
-        was_snapped text not null
-    );
-    insert into hero (hero_id, hero_name, is_xman, was_snapped)
-        values (1, 'Spiderman', 'N', 'Y'),
-               (2, 'Tony Stark', 'N', 'N'),
-               (3, 'Jean Grey', 'Y', 'N');
-
-    create table hero_power (
-        hero_id int not null,
-        hero_power text not null
-    );
-
-    insert into hero_power (hero_id, hero_power)
-        values (1, 'Web Slinging'),
-               (1, 'Super Strength'),
-               (1, 'Total Nerd'),
-               (2, 'Total Nerd'),
-               (3, 'Telepathic Manipulation'),
-               (3, 'Astral Projection');
-        `, ()  => {
-            runQueries(newdb);
-    });
-}
-
-function runQueries(db) {
-    console.log('runQueries');
-    db.all(`select hero_name, is_xman, was_snapped from hero h
-   inner join hero_power hp on h.hero_id = hp.hero_id
-   where hero_power = ?`, "Total Nerd", (err, rows) => {
-        console.log(rows);
-    });
-    console.log('runned');
-
-}
+module.exports = { db };
