@@ -1,11 +1,10 @@
 'use strict';
-const userRt = require('express').Router();
+const express = require('express');
+const userRt = express();
 
 // const { UserCtrl } = require('../controllers');
 
-userRt.get('/gui', () => console.log('CHAMOUUU'));
-// userRt.get('/v1/users/:_id', UserCtrl.getOne);
-// userRt.get('/v1/users', UserCtrl.getMany);
+userRt.get('/fabricante/:_id/modelos', () => console.log('CHAMOUUU'));
 // userRt.post('/v1/users', UserCtrl.post);
 // userRt.put('/v1/users/:_id', UserCtrl.putOne);
 // userRt.delete('/v1/users/:_id', UserCtrl.deleteOne);
