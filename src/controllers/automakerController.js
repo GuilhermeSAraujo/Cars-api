@@ -2,11 +2,9 @@
 const AutomakerService = require('../services/automakerService');
 
 class AutomakerController {
-    static async post(req, res) {
-        console.log('Chamou controller');
-        console.log(req.data);
-        await AutomakerService.createOne();
-        return res.send();
+    static async get(req, res) {
+        let retorno = await AutomakerService.listAll();
+        return res.send(retorno);
     }
 }
 

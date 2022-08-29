@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/GuilhermeSAraujo/Cars-api/issues"
   },
-  "homepage": "https://github.com/GuilhermeSAraujo/Cars-api#readme"
+  "homepage": "https://github.com/GuilhermeSAraujo/Cars-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
 }

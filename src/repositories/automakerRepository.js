@@ -1,8 +1,14 @@
 const db = require('../db');
 
 class AutomakerRepository {
-	static async createAutomaker(name) {
-		await db.run(`INSERT INTO automaker (name) VALUES ("${name}");`);
+	static async listAllAutomaker() {
+		const results = [];
+		let retorno = await db.all(`SELECT * FROM automaker`, [], (err, rows) => {
+			rows.forEach((row) => {
+				console.log(row);
+			});
+		});
+		console.log(retorno);
 	}
 }
 
