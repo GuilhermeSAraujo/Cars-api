@@ -2,13 +2,12 @@ const db = require('../db');
 
 class AutomakerRepository {
 	static async listAllAutomaker() {
-		const results = [];
-		let retorno = await db.all(`SELECT * FROM automaker`, [], (err, rows) => {
-			rows.forEach((row) => {
-				console.log(row);
+		const results = await new Promise((success, failure) => {
+			db.all(`SELECT * FROM automaker`, (err, rows) => {
+				success(rows);
 			});
 		});
-		console.log(retorno);
+		return results;
 	}
 }
 

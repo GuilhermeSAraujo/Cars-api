@@ -7,8 +7,6 @@ let db = new sqlite3.Database('./car.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_
         console.log("Getting error " + err);
         exit(1);
     }
-    // createAutomaker(db);
-    // createModels(db);
     fillDb(db);
 });
 
